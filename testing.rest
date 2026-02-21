@@ -40,10 +40,10 @@ Content-Type: application/json
 
 {
   "profile": {
-    "age": 32
+    "age": 33
   }
 }
 
 //delete user
 ###
-DELETE http://localhost:3000/user/68f464fc7bbc542f6fbcd2f3/
+DELETE http://localhost:3000/user/699a07c438077c6b88c5d9a0/
