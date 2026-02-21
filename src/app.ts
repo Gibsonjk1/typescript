@@ -6,7 +6,7 @@ import session from 'express-session';
 
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
-const mongodb = require('../db/connection');
+const mongodb = require('../db/connection.ts');
 //const { auth } = require('express-openid-connect');
 //const mongoose = require('mongoose');
 

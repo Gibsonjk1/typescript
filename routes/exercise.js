@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const exerciseController = require('../controllers/exerciseController');
+const exerciseController = require('../controllers/exerciseController.ts');
 const util = require('../utilities/index');
 
 router.get('/', util.handleErrors(exerciseController.getAllExercises));

@@ -1,40 +1,53 @@
 const { ObjectId } = require('mongodb');
-const mongodb = require('../db/connection');
+const mongodb = require('../db/connection.ts');
 const { get } = require('http');
 const { flattenObject } = require('../utilities');
+import type { Request, Response } from 'express';
 
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (req: Request, res: Response) => {
   try {
     const result = await mongodb.getDb().db('RandR').collection('User').find().toArray();
     res.status(200).json(result);
   } catch (err) {
-    res.status(500).json({message: err.message});
+    if (err instanceof Error) {
+      res.status(500).json({message: err.message});
+    } else {
+      res.status(500).json({message: 'An unknown error occurred'});
+    }
   }
 };
 
 
-const getUserById = async (req, res) => {
+const getUserById = async (req: Request, res: Response) => {
     try{
     const id = new ObjectId(req.params.id);
     const result = await mongodb.getDb().db('RandR').collection('User').findOne({ _id: id})
     res.status(200).json(result);
     } catch (err) {
+      if (err instanceof Error) {
       res.status(500).json({message: err.message || 'Cannot Get User'});
+    } else {
+      res.status(500).json({message: 'An unknown error occurred'});
     }
+  }
 }
 
-const getUserByGoogleId = async (req, res) => {
+const getUserByGoogleId = async (req: Request, res: Response) => {
     try{
     const id = req.params.id;
     const result = await mongodb.getDb().db('RandR').collection('User').findOne({ googleId: id})
     res.status(200).json(result);
     } catch (err) {
+        if (err instanceof Error) {
       res.status(500).json({message: err.message || 'Cannot Get User'});
+    } else {
+      res.status(500).json({message: 'An unknown error occurred'});
     }
+  }
 }
 
-const createUser = async (req, res) => {
+const createUser = async (req: Request, res: Response) => {
   try {
     const {
       profile,
@@ -153,17 +166,20 @@ const createUser = async (req, res) => {
 
     res.status(201).json({
       message: "User created",
-      userId: newUser._id
+      userId: result.insertedId,
     });
 
   } catch (err) {
-    console.error(err);
+      if (err instanceof Error) {
     res.status(500).json({ message: "Server error", error: err.message });
+  } else {
+    res.status(500).json({ message: "Server error", error: 'An unknown error occurred' });
   }
+}
 };
 
 
-const updateUser = async (req, res) => {
+const updateUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
 
@@ -211,7 +227,7 @@ const ALLOWED_UPDATE_PATHS = [
 
     const flattenedUpdates = flattenObject(req.body);
 
-    const updates = {};
+    const updates: { [key: string]: any } = {};
 
     for (const key of Object.keys(flattenedUpdates)) {
       if (ALLOWED_UPDATE_PATHS.includes(key)) {
@@ -241,20 +257,23 @@ const ALLOWED_UPDATE_PATHS = [
     });
 
   } catch (err) {
-    console.error(err);
+    if (err instanceof Error) {
     res.status(500).json({ message: "Server error", error: err.message });
+  } else {
+    res.status(500).json({ message: "Server error", error: 'An unknown error occurred' });
+  }
   }
 };
 
 
-const deleteUser = async (req, res) => {
+const deleteUser = async (req: Request, res: Response) => {
   const id = new ObjectId(req.params.id);
   const del = await mongodb.getDb().db('RandR').collection('User').deleteOne({_id: id});
   if(del.deletedCount > 0)
     {
       res.status(204).send();
     }else{
-  res.status(400).json(err || 'an error occurred while deleting the user');
+  res.status(400).json({ message: "Failed to delete user" });
  }
 };
 

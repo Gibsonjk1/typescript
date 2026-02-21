@@ -8,7 +8,7 @@ const passport_1 = __importDefault(require("passport"));
 const express_session_1 = __importDefault(require("express-session"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
-const mongodb = require('../db/connection');
+const mongodb = require('../db/connection.ts');
 //const { auth } = require('express-openid-connect');
 //const mongoose = require('mongoose');
 require('../config/passport')(passport_1.default);

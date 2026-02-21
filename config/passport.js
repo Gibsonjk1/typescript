@@ -1,6 +1,6 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { ObjectId } = require('mongodb');
-const mongodb = require('../db/connection');
+const mongodb = require('../db/connection.ts');
 
 module.exports = function(passport) {
     passport.use(new GoogleStrategy({

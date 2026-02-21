@@ -1,21 +1,26 @@
 const { ObjectId } = require('mongodb');
-const mongodb = require('../db/connection');
+const mongodb = require('../db/connection.ts');
 const { flattenObject } = require('../utilities');
+import type { Request, Response, NextFunction } from 'express';
 
-const getAllExercises = async (req, res) => {
+const getAllExercises = async (req: Request, res: Response) => {
   try {
     const result = await mongodb.getDb().db('RandR').collection('Exercise').find().toArray();
     res.status(200).json(result);
   } catch (err) {
+    if (err instanceof Error) {
     res.status(500).json({message: err.message});
+    } else {
+    res.status(500).json({message: 'An unknown error occurred'});
   }
+}
 };
 
-const getExerciseById = async (req, res) => {
+const getExerciseById = async (req: Request, res: Response) => {
   res.status(200).json({message: 'Get exercise by ID - Not yet implemented'});
 };
 
-const createExercises = async (req, res) => {
+const createExercises = async (req: Request, res: Response) => {
   try {
     const exercises = req.body.exercises; // Expect an array of exercises
 
@@ -36,12 +41,15 @@ const createExercises = async (req, res) => {
       res.status(400).json({ message: 'An error occurred while saving the exercises.' });
     }
   } catch (err) {
-    console.error(err);
+    if (err instanceof Error) {
     res.status(500).json({ message: 'Server error', error: err });
+    } else {
+    res.status(500).json({ message: 'An unknown error occurred' });
   }
+}
 };
 
-const updateExercise = async (req, res) => {
+const updateExercise = async (req: Request, res: Response) => {
   try {
     const exerciseId = new ObjectId(req.params.id);
 
@@ -101,24 +109,29 @@ const updateExercise = async (req, res) => {
     });
 
   } catch (err) {
+    if (err instanceof Error) {
     console.error(err);
     res.status(500).json({
       message: "Server error",
       error: err
     });
+    } else {
+    res.status(500).json({ message: 'An unknown error occurred' });
+  }
   }
 };
 
-const deleteExercise = async (req, res) => {
+const deleteExercise = async (req: Request, res: Response) => {
   const id = new ObjectId(req.params.id);
   const del = await mongodb.getDb().db('RandR').collection('Exercise').deleteOne({_id: id});
   if(del.deletedCount > 0)
     {
       res.status(204).send();
     }else{
-  res.status(400).json(err || 'an error occurred while deleting the exercise');
+  res.status(400).json(del.error || 'an error occurred while deleting the exercise');
  }
 };
+
 
 module.exports = {
   getAllExercises,
