@@ -2,15 +2,15 @@ import express, { Application, Request, Response } from 'express';
 import { MongoClient } from "mongodb";
 import passport from 'passport';
 import session from 'express-session';
-
+import mongodb from './db/connection';
+import initPassport from './config/passport';
 
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
-const mongodb = require('../db/connection.ts');
 //const { auth } = require('express-openid-connect');
 //const mongoose = require('mongoose');
 
-require('../config/passport')(passport);
+initPassport(passport);
 
 //Auth0 config
 // app.use(auth({
@@ -66,7 +66,9 @@ mongodb.initDb((err: Error | null, db: MongoClient ) => {
         });
 
         // Set up routes after DB is connected
-        app.use('/', require('../routes/index.js'));
+        import('./routes/index').then((module) => {
+            app.use('/', module.default);
+        });
 
         // Start server after everything is set up
         app.listen(PORT, () => {

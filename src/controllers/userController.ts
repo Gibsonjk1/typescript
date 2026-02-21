@@ -1,11 +1,11 @@
-const { ObjectId } = require('mongodb');
-const mongodb = require('../db/connection.ts');
-const { get } = require('http');
-const { flattenObject } = require('../utilities');
+import { ObjectId } from 'mongodb';
+import mongodb from '../db/connection';
+import { get } from 'http';
+import { flattenObject } from '../utilities';
 import type { Request, Response } from 'express';
 
 
-const getAllUsers = async (req: Request, res: Response) => {
+export const getAllUsers = async (req: Request, res: Response) => {
   try {
     const result = await mongodb.getDb().db('RandR').collection('User').find().toArray();
     res.status(200).json(result);
@@ -19,7 +19,7 @@ const getAllUsers = async (req: Request, res: Response) => {
 };
 
 
-const getUserById = async (req: Request, res: Response) => {
+export const getUserById = async (req: Request, res: Response) => {
     try{
     const id = new ObjectId(req.params.id);
     const result = await mongodb.getDb().db('RandR').collection('User').findOne({ _id: id})
@@ -33,7 +33,7 @@ const getUserById = async (req: Request, res: Response) => {
   }
 }
 
-const getUserByGoogleId = async (req: Request, res: Response) => {
+export const getUserByGoogleId = async (req: Request, res: Response) => {
     try{
     const id = req.params.id;
     const result = await mongodb.getDb().db('RandR').collection('User').findOne({ googleId: id})
@@ -47,7 +47,7 @@ const getUserByGoogleId = async (req: Request, res: Response) => {
   }
 }
 
-const createUser = async (req: Request, res: Response) => {
+export const createUser = async (req: Request, res: Response) => {
   try {
     const {
       profile,
@@ -179,7 +179,7 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 
-const updateUser = async (req: Request, res: Response) => {
+export const updateUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
 
@@ -266,7 +266,7 @@ const ALLOWED_UPDATE_PATHS = [
 };
 
 
-const deleteUser = async (req: Request, res: Response) => {
+export const deleteUser = async (req: Request, res: Response) => {
   const id = new ObjectId(req.params.id);
   const del = await mongodb.getDb().db('RandR').collection('User').deleteOne({_id: id});
   if(del.deletedCount > 0)
@@ -275,13 +275,4 @@ const deleteUser = async (req: Request, res: Response) => {
     }else{
   res.status(400).json({ message: "Failed to delete user" });
  }
-};
-
-module.exports = {
-  getAllUsers,
-  getUserById,
-  createUser,
-  updateUser,
-  deleteUser,
-  getUserByGoogleId
 };

@@ -29,3 +29,5 @@ export const initDb = async (callback: any) => {
             }
             return _db;
         };
+
+export default { initDb, getDb };

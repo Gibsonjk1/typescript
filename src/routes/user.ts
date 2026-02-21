@@ -1,8 +1,10 @@
-const router = require('express').Router();
-const userController = require('../controllers/userController.ts');
-const validator = require('../utilities/validate.js')
-const util = require('../utilities/index.js');
-const { ensureAuth, ensureGuest } = require('../middleware/auth');
+import express from 'express';
+import * as userController from '../controllers/userController';
+import validator from '../utilities/validate';
+import util from '../utilities/index';
+import { ensureAuth, ensureGuest } from '../middleware/auth';
+
+const router = express.Router();
 //const { requiresAuth } = require('express-openid-connect');
 
 // router.get('/profile', requiresAuth(), (req, res) => {
@@ -15,4 +17,4 @@ router.post('/', util.handleErrors(userController.createUser));
 router.put('/:id', util.handleErrors(userController.updateUser));
 router.delete('/:id', util.handleErrors(userController.deleteUser));
 
-module.exports = router;
+export default router;

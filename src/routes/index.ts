@@ -1,11 +1,16 @@
-const router = require('express').Router();
-//const { auth } = require('express-openid-connect');
+import express from 'express';
+import exerciseRouter from './exercise';
+import swaggerRouter from './swagger';
+import userRouter from './user';
+import authRouter from './auth';
 
-router.use('/exercise', require('./exercise'));
-router.use('/user', require('./user'));
-router.use('/api-docs', require('./swagger'));
-router.use('/auth', require('./auth'));
+const router = express.Router();
 
+
+router.use('/exercise', exerciseRouter);
+router.use('/user', userRouter);
+router.use('/api-docs', swaggerRouter);
+router.use('/auth', authRouter);
 
 // const config = {
 //   authRequired: false,
@@ -23,4 +28,4 @@ router.use('/auth', require('./auth'));
 // router.get('/', (req, res) => {
 //   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 // });
-module.exports = router;
+export default router;

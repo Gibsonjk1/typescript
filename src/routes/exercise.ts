@@ -1,6 +1,8 @@
-const router = require('express').Router();
-const exerciseController = require('../controllers/exerciseController.ts');
-const util = require('../utilities/index');
+import express from 'express';
+import * as exerciseController from '../controllers/exerciseController';
+import util from '../utilities/index';
+
+const router = express.Router();
 
 router.get('/', util.handleErrors(exerciseController.getAllExercises));
 router.get('/:id', util.handleErrors(exerciseController.getExerciseById));
@@ -8,4 +10,4 @@ router.post('/', util.handleErrors(exerciseController.createExercises));
 router.put('/:id', util.handleErrors(exerciseController.updateExercise));
 router.delete('/:id', util.handleErrors(exerciseController.deleteExercise));
 
-module.exports = router;
+export default router;
