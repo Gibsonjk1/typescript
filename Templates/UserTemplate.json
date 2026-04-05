@@ -2,23 +2,23 @@
   "_id": "user_12345",
 
   "profile": {
-    "firstName": "Alex",
-    "lastName": "Smith",
-    "age": 32,
-    "heightCm": 178,
-    "weightKg": 75
+    "firstName": "Jason",
+    "lastName": "Gibson",
+    "age": 39,
+    "heightCm": 200,
+    "weightKg": 130
   },
 
   "strengthProfile": {
     "upperBody": [
-      { "muscleId": "chest", "strength": 55 },
+      { "muscleId": "pectoralis_major", "strength": 55 },
 
       { "muscleId": "anterior_deltoids", "strength": 50 },
       { "muscleId": "lateral_deltoids", "strength": 48 },
       { "muscleId": "posterior_deltoids", "strength": 46 },
 
-      { "muscleId": "biceps", "strength": 50 },
-      { "muscleId": "triceps", "strength": 52 },
+      { "muscleId": "biceps_brachii", "strength": 50 },
+      { "muscleId": "triceps_brachii", "strength": 52 },
       { "muscleId": "forearms", "strength": 48 },
 
       { "muscleId": "latissimus_dorsi", "strength": 50 },
@@ -32,7 +32,8 @@
       { "muscleId": "transverse_abdominis", "strength": 50 },
       { "muscleId": "internal_obliques", "strength": 48 },
       { "muscleId": "external_obliques", "strength": 48 },
-      { "muscleId": "erector_spinae", "strength": 52 }
+      { "muscleId": "erector_spinae", "strength": 52 },
+      { "muscleId": "serratus_anterior", "strength": 45 }
     ],
 
     "lowerBody": [
@@ -93,12 +94,13 @@
 
   "activity": {
     "experienceLevel": 3,
-    "sessionsPerWeek": 4
+    "sessionsPerWeek": 4,
+    "nextSessionFocus": "upper_body"
   },
 
   "system": {
     "active": true,
-    "createdAt": "2026-02-01T18:22:00.000Z",
-    "updatedAt": "2026-02-01T18:22:00.000Z"
+    "createdAt": "2026-04-01T18:22:00.000Z",
+    "updatedAt": "2026-04-01T18:22:00.000Z"
   }
 }
